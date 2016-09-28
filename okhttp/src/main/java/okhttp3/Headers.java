@@ -17,18 +17,10 @@
 
 package okhttp3;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
 import okhttp3.internal.Util;
 import okhttp3.internal.http.HttpDate;
+
+import java.util.*;
 
 /**
  * The header fields of a single HTTP message. Values are uninterpreted strings; use {@code Request}
@@ -308,7 +300,7 @@ public final class Headers {
       if (name.isEmpty()) throw new IllegalArgumentException("name is empty");
       for (int i = 0, length = name.length(); i < length; i++) {
         char c = name.charAt(i);
-        if (c <= '\u001f' || c >= '\u007f') {
+        if (c <= '\u001f' || c >= '\u00ff') {
           throw new IllegalArgumentException(Util.format(
               "Unexpected char %#04x at %d in header name: %s", (int) c, i, name));
         }
@@ -316,7 +308,7 @@ public final class Headers {
       if (value == null) throw new NullPointerException("value == null");
       for (int i = 0, length = value.length(); i < length; i++) {
         char c = value.charAt(i);
-        if (c <= '\u001f' || c >= '\u007f') {
+        if (c <= '\u001f' || c >= '\u00ff') {
           throw new IllegalArgumentException(Util.format(
               "Unexpected char %#04x at %d in %s value: %s", (int) c, i, name, value));
         }
